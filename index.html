@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>猪头绘图</title>
+    <style>
+        .pig-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 50px auto;
+        }
+        
+        .pig-head {
+            position: absolute;
+            width: 200px;
+            height: 180px;
+            background-color: #ffb6c1;
+            border-radius: 50% 50% 50% 50%;
+            top: 50px;
+        }
+        
+        .ear {
+            position: absolute;
+            width: 80px;
+            height: 90px;
+            background-color: #ff9999;
+            border-radius: 50% 50% 50% 50%;
+            border: 3px solid #ff7777;
+        }
+        
+        .left-ear {
+            top: 15px;
+            left: -20px;
+            transform: rotate(-45deg);
+        }
+        
+        .right-ear {
+            top: 15px;
+            right: -20px;
+            transform: rotate(45deg);
+        }
+        
+        .eye {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: white;
+            border-radius: 50%;
+            border: 3px solid black;
+            overflow: hidden;
+        }
+        
+        .left-eye {
+            top: 90px;
+            left: 50px;
+        }
+        
+        .right-eye {
+            top: 90px;
+            right: 50px;
+        }
+        
+        .pupil {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background-color: black;
+            border-radius: 50%;
+            top: 7px;
+            left: 7px;
+        }
+        
+        .eyelid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #ffb6c1;
+            top: -100%;
+            left: 0;
+            animation: blink 4s infinite;
+        }
+        
+        @keyframes blink {
+            0% { top: -100%; }
+            95% { top: -100%; }
+            97% { top: 0; }
+            99% { top: 0; }
+            100% { top: -100%; }
+        }
+        
+        .nose {
+            position: absolute;
+            width: 70px;
+            height: 55px;
+            background-color: #ff7777;
+            border-radius: 40%;
+            top: 130px;
+            left: 65px;
+            cursor: pointer;
+            border: 3px solid #ff5555;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.3);
+        }
+        
+        .nostril {
+            position: absolute;
+            width: 15px;
+            height: 20px;
+            background-color: #ff4444;
+            border-radius: 50%;
+            border: 1px solid #ff2222;
+        }
+        
+        .left-nostril {
+            top: 17px;
+            left: 17px;
+        }
+        
+        .right-nostril {
+            top: 17px;
+            right: 17px;
+        }
+        
+        .mouth {
+            position: absolute;
+            width: 50px;
+            height: 10px;
+            background-color: #ff5555;
+            border-radius: 0 0 25px 25px;
+            top: 165px;
+            left: 75px;
+            transform-origin: center center;
+            overflow: hidden;
+        }
+        
+        .yawning {
+            animation: yawn 5s;
+        }
+        
+        @keyframes yawn {
+            0% { height: 10px; }
+            20% { height: 40px; border-radius: 50%; }
+            40% { height: 50px; border-radius: 50%; }
+            70% { height: 40px; border-radius: 30%; }
+            100% { height: 10px; border-radius: 0 0 25px 25px; }
+        }
+        
+        .text {
+            position: absolute;
+            top: 10px;
+            width: 100%;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: red;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="pig-container">
+        <div class="text" id="nameText">黄国欢</div>
+        <div class="pig-head">
+            <div class="ear left-ear"></div>
+            <div class="ear right-ear"></div>
+            <div class="eye left-eye">
+                <div class="pupil"></div>
+                <div class="eyelid"></div>
+            </div>
+            <div class="eye right-eye">
+                <div class="pupil"></div>
+                <div class="eyelid"></div>
+            </div>
+            <div class="nose" id="pigNose">
+                <div class="nostril left-nostril"></div>
+                <div class="nostril right-nostril"></div>
+            </div>
+            <div class="mouth" id="pigMouth"></div>
+        </div>
+    </div>
+
+    <script>
+        // 获取元素
+        const pigNose = document.getElementById('pigNose');
+        const nameText = document.getElementById('nameText');
+        const pigMouth = document.getElementById('pigMouth');
+
+        // 添加鼻子点击事件
+        pigNose.addEventListener('click', function() {
+            // 显示/隐藏文字
+            nameText.style.display = nameText.style.display === 'none' ? 'block' : 'none';
+        });
+
+        // 随机打哈欠函数
+        function randomYawn() {
+            // 如果嘴巴不在动画中
+            if (!pigMouth.classList.contains('yawning')) {
+                // 添加哈欠动画类
+                pigMouth.classList.add('yawning');
+                
+                // 动画结束后移除类
+                setTimeout(function() {
+                    pigMouth.classList.remove('yawning');
+                }, 5000);
+            }
+            
+            // 设置下一次随机打哈欠时间 (10-30秒)
+            const nextYawnTime = Math.random() * 20000 + 10000;
+            setTimeout(randomYawn, nextYawnTime);
+        }
+
+        // 页面加载后3-8秒开始第一次打哈欠
+        setTimeout(randomYawn, Math.random() * 5000 + 3000);
+    </script>
+</body>
+</html>
+</html>
